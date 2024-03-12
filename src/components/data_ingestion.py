@@ -7,6 +7,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_cleaning import DataCleaning
+from src.components.data_cleaning import DataCleaningConfig
+
 #from src.components.data_transforamtion import DataTransformation
 #from src.components.data_transforamtion import DataTransformationConfig
 
@@ -45,3 +48,6 @@ class DataIngestion:
 if __name__=="__main__":
     obj=DataIngestion()
     raw_data=obj.initiate_data_ingestion()
+    
+    obj=DataCleaning()
+    train_data,test_data=obj.initiate_data_cleaning()
