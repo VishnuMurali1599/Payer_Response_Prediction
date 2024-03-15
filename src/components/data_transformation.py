@@ -77,7 +77,12 @@ class DataTransformation:
 
         try:
             train_df=pd.read_csv(train_path)
+            category_frequencies = train_df['City_Code'].value_counts()
+            train_df['City_Code'] = train_df['City_Code'].map(category_frequencies)
+            
             test_df=pd.read_csv(test_path)
+            category_frequencies = test_df['City_Code'].value_counts()
+            test_df['City_Code'] = test_df['City_Code'].map(category_frequencies)
 
             logging.info("Read train and test data completed")
 
@@ -86,21 +91,17 @@ class DataTransformation:
             preprocessing_obj=self.get_data_transformer_object()
 
             target_column_name = "Response"
-            numerical_columns = ['Holding_Policy_Duration',
+            numerical_columns = ['City_Code','Holding_Policy_Duration',
                                  'Holding_Policy_Type','Reco_Policy_Cat',
                                  'Reco_Policy_Premium','Age']
 
             input_feature_train_df=train_df.drop(columns=[target_column_name],axis=1)
-            category_frequencies = input_feature_train_df['City_Code'].value_counts()
-            input_feature_train_df['City_Code'] = input_feature_train_df['City_Code'].map(category_frequencies)
-            
             target_feature_train_df=train_df[target_column_name]
 
             input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
-            category_frequencies = input_feature_test_df['City_Code'].value_counts()
-            input_feature_test_df['City_Code'] = input_feature_test_df['City_Code'].map(category_frequencies)
-            
             target_feature_test_df=test_df[target_column_name]
+            
+            print(input_feature_test_df)
 
             logging.info(
                 f"Applying preprocessing object on training dataframe and testing dataframe."
@@ -108,6 +109,8 @@ class DataTransformation:
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
+            
+            print(input_feature_test_arr)
 
             train_arr = np.c_[
                 input_feature_train_arr, np.array(target_feature_train_df)
@@ -131,3 +134,7 @@ class DataTransformation:
             
         except Exception as e:
             raise CustomException(e,sys)
+        
+if __name__ =="__main__":
+    obj  = DataTransformation()
+    obj.initiate_data_transformation(test_path="artifacts/test.csv",train_path="artifacts/train.csv")

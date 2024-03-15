@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payer Response Prediciton (Deep Learning Project)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            /* Remove fixed height to allow scrolling */
+            /* height: 100vh; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333333;
+            text-align: left;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <h1>Payer Response Prediction</h1>
+
+        <form action="{{ url_for('predict_datapoint')}}" method="post">
+            <div class="mb-3">
+                <label class="form-label">City_Code</label>
+                <select class="form-control" name="City_Code" placeholder="Select Education" required>
+                    <option class="placeholder" selected disabled value="">Select Education</option>
+                    <option value="C1">
+                        C1
+                    </option>
+                    <option value="C2">
+                        C2
+                    </option>
+                    <option value="C3">
+                        C3
+                    </option>
+                    <option value="C4">
+                        C4
+                    </option>
+                    <option value="C9">
+                        C9
+                    </option>
+                    <option value="C6">
+                        C6
+                    </option>
+                    <option value="C7">
+                        C7
+                    </option>
+                    <option value="C8">
+                        C8
+                    </option>
+                    <option value="C10">
+                        C10
+                    </option>
+                    <option value="C5">
+                        C5
+                    </option>
+                    <option value="C15">
+                        C15
+                    </option>
+                    <option value="C17">
+                        C17
+                    </option>
+                    <option value="C11">
+                        C11
+                    </option>
+                    <option value="C16">
+                        C16
+                    </option>
+                    <option value="C13">
+                        C13
+                    </option>
+                    <option value="C20">
+                        C20
+                    </option>
+                    <option value="C19">
+                        C19
+                    </option>
+                    <option value="C12">
+                        C12
+                    </option>
+                    <option value="C18">
+                        C18
+                    </option>
+                    <option value="C14">
+                        C14
+                    </option>
+                    <option value="C21">
+                        C21
+                    </option>
+                    <option value="C23">
+                        C23
+                    </option>
+                    <option value="C24">
+                        C24
+                    </option>
+                    <option value="C22">
+                        C22
+                    </option>
+                    <option value="C26">
+                        C26
+                    </option>
+                    <option value="C29">
+                        C29
+                    </option>
+                    <option value="C25">
+                        C25
+                    </option>
+                    <option value="C27">
+                        C27
+                    </option>
+                    <option value="C33">
+                        C33
+                    </option>
+                    <option value="C28">
+                        C28
+                    </option>
+                    <option value="C32">
+                        C32
+                    </option>
+                    <option value="C34">
+                        C34
+                    </option>
+                    <option value="C30">
+                        C30
+                    </option>
+                    <option value="C35">
+                        C35
+                    </option>
+                    <option value="C36">
+                        C36
+                    </option>
+                    <option value="C31">
+                        C31
+                    </option>
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Accomodation_Type</label>
+                <select class="form-control" name="Accomodation_Type" placeholder="Select Accomodation_Type" required>
+                    <option class="placeholder" selected disabled value="">Select Accomodation_Type</option>
+                    <option value="Owned">
+                        Owned
+                    </option>
+                    <option value="Rented">
+                        Rented
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Reco_Insurance_Type</label>
+                <select class="form-control" name="Reco_Insurance_Type" placeholder="Select Reco_Insurance_Type" required>
+                    <option class="placeholder" selected disabled value="">Select Reco_Insurance_Type</option>
+                    <option value="Individual">
+                        Individual
+                    </option>
+                    <option value="Joint">
+                        Joint
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Is_Spouse</label>
+                <select class="form-control" name="Is_Spouse" placeholder="Select Is_Spouse" required>
+                    <option class="placeholder" selected disabled value="">Select Is_Spouse</option>
+                    <option value="Yes">
+                        Yes
+                    </option>
+                    <option value="No">
+                        No
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Health_Indicator</label>
+                <select class="form-control" name="Health_Indicator" placeholder="Select Health_Indicator" required>
+                    <option class="placeholder" selected disabled value="">Select Health_Indicator</option>
+                    <option value="X1">
+                        X1
+                    </option>
+                    <option value="X2">
+                        X2
+                    </option>
+                    <option value="X3">
+                        X3
+                    </option>
+                    <option value="X4">
+                        X4
+                    </option>
+                    <option value="X5">
+                        X5
+                    </option>
+                    <option value="X6">
+                        X6
+                    </option>
+                    <option value="X7">
+                        X7
+                    </option>
+                    <option value="X8">
+                        X8
+                    </option>
+                    <option value="X9">
+                        X9
+                    </option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Enter Holding_Policy_Duration</label>
+                <input class="form-control" type="number" name="Holding_Policy_Duration"
+                    placeholder="Enter the Holding_Policy_Duration " min='0' max='1000000' />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Holding_Policy_Type</label>
+                <input class="form-control" type="number" name="Holding_Policy_Type"
+                    placeholder="Enter Holding_Policy_Type (1,2,3,4)" min='0' max='4' />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Reco_Policy_Cat</label>
+                <input class="form-control" type="number" name="Reco_Policy_Cat"
+                    placeholder="Enter Reco_Policy_Cat" min='0' max='1000000' />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Reco_Policy_Premium</label>
+                <input class="form-control" type="number" name="Reco_Policy_Premium"
+                    placeholder="Enter Reco_Policy_Premium" min='0' max='1000000' />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Age</label>
+                <input class="form-control" type="number" name="Age"
+                    placeholder="Enter the Age" min='0' max='100' />
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Predict" required />
+            </div>
+        </form>
+
+        <h2>
+            {% if results == 0 %}
+                Result is 0: The customer will have negative attitude towards the new product.
+            {% elif results == 1 %}
+                Result is 1: The customer will have postive attitude towards the new product.
+            {% endif %}
+        </h2>
+    </div>
+</body>
+</html>
